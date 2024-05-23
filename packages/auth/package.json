@@ -1,0 +1,11 @@
+{
+  "name": "@bookshelf/auth",
+  "version": "0.1.0",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "firebase": "^10.12.1"
+  }
+}

@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { helloWorld } from '@bookshelf/api'
+import { getUserDetails, helloWorld } from '@bookshelf/api'
+import { useEffect, useRef, useState } from 'react';
+import { logout, signUp } from "@bookshelf/auth";
 
 function App() {
-  const [count, setCount] = useState(0)
   helloWorld();
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getUserDetails()
+      setUser(user.data)
+    }
+    fetchUser()
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Test signup</h1>
+      {user ? (
+        <>
+          <p>Hello {user?.email}</p>
+          <button onClick={async() => {
+            const response = await logout();
+            if (response.status === "ok") {
+              setUser(null)
+            }
+            window.location.reload();
+          }}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <input type="text" name="name" id="name" placeholder="Name" ref={nameRef} />
+          <input type="email" name="email" id="email" placeholder="Email" ref={emailRef} />
+          <input type="password" name="password" id="password" placeholder="Password" ref={passwordRef} />
+          <button onClick={async() => {
+            const response = await signUp(nameRef.current.value, emailRef.current.value, passwordRef.current.value);
+            if (response.status === "ok") {
+              setUser(response.data.user)
+            }
+          }}>
+            Signup
+          </button>
+        </>
+      )}
     </>
   )
 }
