@@ -5,11 +5,15 @@ If you already have `yarn` installed on your system, skip this step.
 
 To check if `yarn` is installed, run the following command in a terminal:
 
-`yarn -v`
+```bash
+yarn -v
+```
 
 Install `yarn` on your system with the following command:
 
-`npm install yarn -g`
+```bash
+npm install yarn -g
+```
 
 This command installs `yarn` globally on your system.
 
@@ -18,9 +22,13 @@ For the above command to run, your system must have [NodeJS](https://nodejs.org)
 ### Step 2
 Run the following command to install all dependencies:
 
-`yarn install`
+```bash
+yarn install
+```
 
 ### Step 3
 Run the following command to start local dev server:
 
-`yarn dev`
+```bash
+yarn dev
+```
