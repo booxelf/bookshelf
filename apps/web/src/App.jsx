@@ -1,6 +1,7 @@
 import { getUserDetails, helloWorld } from '@bookshelf/api'
 import { useEffect, useRef, useState } from 'react';
 import { logout, signUp } from "@bookshelf/auth";
+import { Button } from "@mui/material"
 
 function App() {
   helloWorld();
@@ -23,7 +24,7 @@ function App() {
       {user ? (
         <>
           <p>Hello {user?.email}</p>
-          <button onClick={async() => {
+          <Button variant="contained" onClick={async() => {
             const response = await logout();
             if (response.status === "ok") {
               setUser(null)
@@ -31,21 +32,21 @@ function App() {
             window.location.reload();
           }}>
             Logout
-          </button>
+          </Button>
         </>
       ) : (
         <>
           <input type="text" name="name" id="name" placeholder="Name" ref={nameRef} />
           <input type="email" name="email" id="email" placeholder="Email" ref={emailRef} />
           <input type="password" name="password" id="password" placeholder="Password" ref={passwordRef} />
-          <button onClick={async() => {
+          <Button variant="contained" onClick={async() => {
             const response = await signUp(nameRef.current.value, emailRef.current.value, passwordRef.current.value);
             if (response.status === "ok") {
               setUser(response.data.user)
             }
           }}>
             Signup
-          </button>
+          </Button>
         </>
       )}
     </>
