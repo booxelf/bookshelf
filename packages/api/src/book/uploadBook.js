@@ -16,6 +16,18 @@ const toBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = reject;
 });
 
+/**
+ * @typedef {Object} UploadBookResponse
+ * @property {Object} data
+ * @property {'ok' | 'error'} status
+ * @property {{ code: string, message: string }} error
+ */
+
+/**
+ * Uploads book to cloud storage
+ * @param {File} fileObj - File selected by user
+ * @returns {Promise<UploadBookResponse>} response
+ */
 export const uploadBook = async (fileObj) => {
   const bookBase64 = await toBase64(fileObj)
   const book = await PDFDocument.load(bookBase64, { updateMetadata: false })
