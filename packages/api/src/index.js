@@ -5,3 +5,4 @@ export const helloWorld = () => {
 }
 
 export * from './getUserDetails'
+export * from './book'
