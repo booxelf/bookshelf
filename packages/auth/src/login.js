@@ -17,17 +17,18 @@ const auth = getAuth();
  */
 export const login = async (email, password) => {
   const response = {};
-  await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      response.data.user = userCredential.user
+  try {
+    const loginResponse = await signInWithEmailAndPassword(auth, email, password)
+    if (loginResponse.user) {
+      response.data = { user: loginResponse.user }
       response.status = "ok"
-    })
-    .catch((error) => {
-      response.status="error"
-      response.error = {
-        code: error.code,
-        message: error.message,
-      }
-    });
+    }
+  } catch(error) {
+    response.status="error"
+    response.error = {
+      code: error.code,
+      message: error.message,
+    }
+  };
   return response
 }
